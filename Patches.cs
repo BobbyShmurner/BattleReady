@@ -10,16 +10,10 @@ namespace BattleReady
 		public static void Prefix(MusicManager __instance, ref float ___requestedThemes, ref bool __runOriginal) {
 			__runOriginal = false;
 			___requestedThemes -= 1f;
-
-			Plugin.Log.LogInfo("Prefix");
 		}
 		
 		public static void Postfix(MusicManager __instance) {
-			Plugin.Log.LogInfo("Postfix");
-
 			__instance.PlayBattleMusic();
-
-			Plugin.Log.LogInfo("Battle Should be playing");
 		}
 	}
 
