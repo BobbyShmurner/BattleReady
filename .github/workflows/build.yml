@@ -22,13 +22,6 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 
-    # - name: Get Mod Name
-    #   id: mod_name
-    #   run: |
-    #     echo 'MOD_NAME: ${env:MOD_NAME}'
-    #     echo '::set-output name=NAME::{$env:MOD_NAME}'
-    #   shell: pwsh
-
     - name: Build
       run: |
         dotnet publish -c Release -r win-x64
