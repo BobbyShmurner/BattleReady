@@ -24,7 +24,9 @@ jobs:
 
     - name: Get Mod Name
       id: mod_name
-      run: echo ::set-output name=NAME::"$env:MOD_NAME"
+      run: |
+        echo 'MOD_NAME: $env:MOD_NAME'
+        echo '::set-output name=NAME::$env:MOD_NAME'
 
     - name: Build
       run: |
