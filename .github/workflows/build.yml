@@ -27,6 +27,7 @@ jobs:
       run: |
         echo 'MOD_NAME: ${env:MOD_NAME}'
         echo '::set-output name=NAME::{$env:MOD_NAME}'
+      shell: pwsh
 
     - name: Build
       run: |
