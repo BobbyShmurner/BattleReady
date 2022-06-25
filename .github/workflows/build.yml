@@ -22,12 +22,12 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 
-    - name: Get Mod Name
-      id: mod_name
-      run: |
-        echo 'MOD_NAME: ${env:MOD_NAME}'
-        echo '::set-output name=NAME::{$env:MOD_NAME}'
-      shell: pwsh
+    # - name: Get Mod Name
+    #   id: mod_name
+    #   run: |
+    #     echo 'MOD_NAME: ${env:MOD_NAME}'
+    #     echo '::set-output name=NAME::{$env:MOD_NAME}'
+    #   shell: pwsh
 
     - name: Build
       run: |
@@ -36,6 +36,6 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ steps.mod_name.outputs.NAME }}.dll
-        path: .\bin\Release\net471\win-x64\publish\${{ steps.mod_name.outputs.NAME }}.dll
+        name: ${{ env.MOD_NAME }}.dll
+        path: .\bin\Release\net471\win-x64\publish\${{ env.MOD_NAME }}.dll
         if-no-files-found: error

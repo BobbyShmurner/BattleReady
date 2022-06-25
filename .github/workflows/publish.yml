@@ -22,12 +22,12 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 
-    - name: Get Mod Name
-      id: mod_name
-      run: |
-        echo 'MOD_NAME: ${env:MOD_NAME}'
-        echo '::set-output name=NAME::{$env:MOD_NAME}'
-      shell: pwsh
+    # - name: Get Mod Name
+    #   id: mod_name
+    #   run: |
+    #     echo 'MOD_NAME: ${env:MOD_NAME}'
+    #     echo '::set-output name=NAME::{$env:MOD_NAME}'
+    #   shell: pwsh
 
     - name: Build
       run: |
@@ -96,6 +96,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.get_upload_url.outputs.upload_url }}
-        asset_path: ./bin/Release/net471/win-x64/publish/${{ steps.mod_name.outputs.NAME }}.dll
-        asset_name: ${{ steps.mod_name.outputs.NAME }}.dll
+        asset_path: ./bin/Release/net471/win-x64/publish/${{ env.MOD_NAME }}.dll
+        asset_name: ${{ env.MOD_NAME }}.dll
         asset_content_type: application/octet-stream
