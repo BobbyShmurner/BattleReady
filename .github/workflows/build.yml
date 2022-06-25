@@ -1,0 +1,37 @@
+name: Build
+
+env:
+  mod_name: BattleReady
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout
+      with:
+        submodules: true
+        lfs: true
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
+
+    - name: Build
+      run: |
+        dotnet publish -c Release -r win-x64
+        
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${mod_name}.dll
+        path: ./bin/Release/net471/win-x64/publish/${mod_name}.dll
+        if-no-files-found: error
