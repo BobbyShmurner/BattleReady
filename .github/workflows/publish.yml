@@ -1,7 +1,7 @@
 name: Publish QMod
 
 env:
-  mod_name: BattleReady
+  MOD_NAME: BattleReady
 
 on:
   push:
@@ -22,11 +22,9 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 
-    # - name: Setup NuGet
-    #   uses: NuGet/setup-nuget@v1.0.2
-
-    # - name: NuGet Restore
-    #   run: nuget restore ${BattleReady}.csproj
+    - name: Get Mod Name
+      id: mod_name
+      run: echo ::set-output name=NAME::"$env:MOD_NAME"
 
     - name: Build
       run: |
@@ -95,6 +93,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.get_upload_url.outputs.upload_url }}
-        asset_path: ./bin/Release/net471/win-x64/publish/${mod_name}.dll
-        asset_name: ${mod_name}.dll
+        asset_path: ./bin/Release/net471/win-x64/publish/${{ steps.mod_name.outputs.NAME }}.dll
+        asset_name: ${{ steps.mod_name.outputs.NAME }}.dll
         asset_content_type: application/octet-stream

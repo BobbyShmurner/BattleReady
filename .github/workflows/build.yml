@@ -1,7 +1,7 @@
 name: Build
 
 env:
-  mod_name: BattleReady
+  MOD_NAME: BattleReady
 
 on:
   workflow_dispatch:
@@ -22,11 +22,9 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 
-    # - name: Setup NuGet
-    #   uses: NuGet/setup-nuget@v1.0.2
-
-    # - name: NuGet Restore
-    #   run: nuget restore ${BattleReady}.csproj
+    - name: Get Mod Name
+      id: mod_name
+      run: echo ::set-output name=NAME::"$env:MOD_NAME"
 
     - name: Build
       run: |
@@ -35,6 +33,6 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${mod_name}.dll
-        path: ./bin/Release/net471/win-x64/publish/${mod_name}.dll
+        name: ${{ steps.mod_name.outputs.NAME }}.dll
+        path: .\bin\Release\net471\win-x64\publish\${{ steps.mod_name.outputs.NAME }}.dll
         if-no-files-found: error
